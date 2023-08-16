@@ -24,10 +24,11 @@ get_data <- function(name) {
   y <- read.table(paste("./", name, "/y_", name, ".txt", sep=''))
   
   ## SET EACH RESULT TO MATRIX AND RETURN A LIST OF ALL VARIABLES
-  output <- list(as.matrix(X), body_acc_x, body_acc_y, body_acc_z,
+  output <- list(as.matrix(subject_train), as.matrix(y),
+                 body_acc_x, body_acc_y, body_acc_z,
                  body_gyro_x, body_gyro_y, body_gyro_z,
                  total_acc_x, total_acc_y, total_acc_z,
-                 as.matrix(subject_train), as.matrix(y))
+                 as.matrix(X))
 }
 
 ## DEFINE FUNCTION FOR CALCULATING MEAN AND STANDARD DEVIATION
@@ -49,4 +50,4 @@ final <- Reduce(function (x, y) cbind(x, y), merged_data)
 ## ALL DESCRIPTIVE NAMES ARE SAVED IN feature_updated.txt
 colnames(final) <- as.vector(read.table("feature_updated.txt")[2])$V2
 
-write.table(final, file='tidy_data.txt', row.names = FALSE)
+write.table(head(final, 300), file='tidy_data.txt', row.names = FALSE)
